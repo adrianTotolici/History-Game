@@ -11,9 +11,13 @@ public:
 	void setPosition(int x, int y);
 	void getPosition(int &x, int &y);
 	void getName(string &name);
+	char getTile() { return _tile; }
 
 	int attack();
 	int takeDamage(int attack);
+
+	char getMove(int playerX, int playerY);
+
 private:
 	string _name;
 	char _tile;

@@ -16,6 +16,7 @@ void GameSystem::playGame() {
 	{
 		_level.print();
 		playerMove();
+		_level.updateEnemies(_player);
 	}
 }
 

@@ -6,6 +6,9 @@ public:
 	void init(int level, int health, int attack, int defense, int experience);
 	void setPosition(int x, int y);
 	void getPosition(int &x, int &y);
+	void addExperience(int experience);
+	int attack();
+	int takeDamage(int attack);
 
 private:
 	int _level;

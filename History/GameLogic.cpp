@@ -1,0 +1,213 @@
+#include "stdafx.h"
+#include "GameLogic.h"
+
+GameLogic::GameLogic() {
+	_player.init(1, 100, 20, 10);
+	_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
+	procesLevel();
+	_uiLogica.print();
+}
+
+void GameLogic::playerMove() {
+	char input;
+	input = _getch();
+	movePlayer(input, _player);
+}
+
+void GameLogic::printLevel() {
+	_level.print();
+}
+
+void GameLogic::updateEnemies() {
+	char aiMove;
+	int playerX, playerY;
+	int enemyX, enemyY;
+
+	_player.getPosition(playerX, playerY);
+
+	for (size_t i = 0; i < _enemies.size(); i++) {
+		aiMove = _enemies[i].getMove(playerX, playerY);
+		_enemies[i].getPosition(enemyX, enemyY);
+
+		switch (aiMove) {
+		case 'w':
+			processEnemyMove(_player, i, enemyX, enemyY - 1);
+			break;
+		case 's':
+			processEnemyMove(_player, i, enemyX, enemyY + 1);
+			break;
+		case 'a':
+			processEnemyMove(_player, i, enemyX - 1, enemyY);
+			break;
+		case 'd':
+			processEnemyMove(_player, i, enemyX + 1, enemyY);
+			break;
+		}
+	}
+}
+
+void GameLogic::movePlayer(char input, Player &player) {
+	int playerX, playerY;
+	player.getPosition(playerX, playerY);
+
+	switch (input) {
+	case 'w':
+		processPlayerMove(player, playerX, playerY - 1);
+		break;
+	case 's':
+		processPlayerMove(player, playerX, playerY + 1);
+		break;
+	case 'a':
+		processPlayerMove(player, playerX - 1, playerY);
+		break;
+	case 'd':
+		processPlayerMove(player, playerX + 1, playerY);
+		break;
+	default:
+		printf("Invalid input !");
+		system("PAUSE");
+		break;
+	}
+}
+
+void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
+	int enemyX, enemyY;
+	int playerX, playerY;
+	int attackRoll;
+	int attackResult;
+	string enemyName;
+
+	player.getPosition(playerX, playerY);
+
+	for (size_t i = 0; i < _enemies.size(); i++) {
+		_enemies[i].getPosition(enemyX, enemyY);
+		enemyName = _enemies[i].getName();
+		if (targetX == enemyX && targetY == enemyY) {
+			//Battle
+			//Player attack;
+			attackRoll = player.attack();
+			_uiLogica.updateBattleLog("Player attacked %s whit roll of %d \n", enemyName.c_str(), attackRoll);
+			attackResult = _enemies[i].takeDamage(attackRoll);
+			if (attackResult != 0) {
+				_level.setTile(targetX, targetY, '.');
+				_level.print();
+				_uiLogica.updateBattleLog("%s died!\n", enemyName.c_str());
+				//printf("%s died!\n", enemyName.c_str());
+				_enemies[i] = _enemies.back();
+				_enemies.pop_back();
+				i--;
+				system("PAUSE");
+				player.addExperience(attackResult);
+
+				return;
+			}
+			//Enemy attack
+			attackRoll = _enemies[i].attack();
+			_uiLogica.updateBattleLog("%s attacked player whit roll of %d \n", enemyName.c_str(), attackRoll);
+			//printf("%s attacked player whit roll of %d \n", enemyName.c_str(), attackRoll);
+			attackResult = player.takeDamage(attackRoll);
+
+			if (attackResult != 0) {
+				_level.setTile(playerX, playerY, 'x');
+				_level.print();
+				_uiLogica.updateBattleLog("You died!\n");
+				//printf("You died!\n");
+				system("PAUSE");
+
+				exit(0);
+			}
+			system("PAUSE");
+			return;
+		}
+	}
+}
+
+void GameLogic::procesLevel() {
+	char tile;
+	for (size_t i = 0; i < _level._levelData.size(); i++) {
+		for (size_t j = 0; j <_level._levelData[i].size(); j++) {
+			tile = _level._levelData[i][j];
+
+			switch (tile) {
+			case '@': //Player
+				_player.setPosition(j, i);
+				break;
+			case 's': //snake
+				_enemies.push_back(Enemy(10));
+				_enemies.back().init(1, 2, 1, 10);
+				_enemies.back().setName("Snake");
+				_enemies.back().setTile(tile);
+				_enemies.back().setPosition(j, i);
+				break;
+			case 'g': //goblin
+				_enemies.push_back(Enemy(10));
+				_enemies.back().init(1, 2, 1, 10);
+				_enemies.back().setName("Goblin");
+				_enemies.back().setTile(tile);
+				_enemies.back().setPosition(j, i);
+				break;
+			case 'B': //bandit
+				_enemies.push_back(Enemy(10));
+				_enemies.back().init(1, 2, 1, 10);
+				_enemies.back().setName("Bandit");
+				_enemies.back().setTile(tile);
+				_enemies.back().setPosition(j, i);
+				break;
+			case 'O': //Ogre
+				_enemies.push_back(Enemy(10));
+				_enemies.back().init(1, 2, 1, 10);
+				_enemies.back().setName("Ogre");
+				_enemies.back().setTile(tile);
+				_enemies.back().setPosition(j, i);
+				break;
+			case 'D': //Dragon
+				_enemies.push_back(Enemy(10));
+				_enemies.back().init(1, 2, 1, 10);
+				_enemies.back().setName("Dragon");
+				_enemies.back().setTile(tile);
+				_enemies.back().setPosition(j, i);
+				break;
+			}
+		}
+	}
+}
+
+void GameLogic::processPlayerMove(Player &player, int targetX, int targetY) {
+	int playerX, playerY;
+	player.getPosition(playerX, playerY);
+	char moveTile = _level.getTile(targetX, targetY);
+
+	switch (moveTile) {
+	case '.':
+		player.setPosition(targetX, targetY);
+		_level.setTile(playerX, playerY, '.');
+		_level.setTile(targetX, targetY, '@');
+		break;
+	case '#':
+		break;
+	default:
+		battleEnemy(player, targetX, targetY);
+	}
+}
+
+void GameLogic::processEnemyMove(Player &player, int enemyIndex, int targetX, int targetY) {
+	int playerX, playerY;
+	int enemyX, enemyY;
+
+	_enemies[enemyIndex].getPosition(enemyX, enemyY);
+	player.getPosition(playerX, playerY);
+	char moveTile = _level.getTile(targetX, targetY);
+
+	switch (moveTile) {
+	case '.':
+		_enemies[enemyIndex].setPosition(targetX, targetY);
+		_level.setTile(enemyX, enemyY, '.');
+		_level.setTile(targetX, targetY, _enemies[enemyIndex].getTile());
+		break;
+	case '@':
+		battleEnemy(player, enemyX, enemyY);
+		break;
+	default:
+		break;
+	}
+}

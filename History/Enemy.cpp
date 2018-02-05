@@ -6,31 +6,10 @@
 
 using namespace std;
 
-
-Enemy::Enemy(string name, char tile, int level, int attack, int defense, int health, int xp)
+Enemy::Enemy(int xp)
 {
-	_name = name;
-	_tile = tile;
-	_level = level;
-	_attack = attack;
-	_defense = defense;
-	_health = health;
 	_experienceValue = xp;
-}
-
-void Enemy::setPosition(int x, int y) {
-	_x = x;
-	_y = y;
-}
-
-void Enemy::getPosition(int &x, int &y) {
-	x = _x;
-	y = _y;
-}
-
-void Enemy::getName(string &name) {
-	name = _name;
-}
+}	
 
 int Enemy::attack() {
 	static default_random_engine randomEngine((unsigned int)time(NULL));
@@ -48,6 +27,9 @@ int Enemy::takeDamage(int attack) {
 			return _experienceValue;
 		}
 	}
+
+	printf("Enemy life %d \n", _health);
+
 	return 0;
 }
 

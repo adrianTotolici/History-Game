@@ -1,8 +1,8 @@
 #pragma once
+#include "stdafx.h"
 #include <string>
 #include <vector>
-#include "Player.h"
-#include "Enemy.h"
+#include <fstream>
 
 using namespace std;
 
@@ -11,19 +11,16 @@ class Level
 public:
 	Level();
 
-	void load(string fileName, Player &player);
+	void load(string fileName);
 	void print();
-	void movePlayer(char input, Player &player);
-	void updateEnemies(Player &player);
+
 
 	char getTile(int x, int y);
 	void setTile(int x, int y, char tile);
 
-private:
 	vector <string> _levelData;
-	vector <Enemy> _enemies;
 
-	void processPlayerMove(Player &player, int targetX, int targetY);
-	void processEnemyMove(Player &player, int enemyIndex, int targetX, int targetY);
-	void battleEnemy(Player &player, int targetX, int targetY);
+private:
+	//Utils _utils;
+	//HANDLE _hStdout = GetStdHandle(STD_OUTPUT_HANDLE);;
 };

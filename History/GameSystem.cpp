@@ -3,25 +3,17 @@
 #include <conio.h>
 
 
-GameSystem::GameSystem(string levelFileName)
-{
-	_player.init(1, 100, 10, 10, 0);
-	_level.load(levelFileName, _player);
-}
+GameSystem::GameSystem(){}
 
 void GameSystem::playGame() {
 	bool isDone = false;
+	GameLogic gameLogic;
 
 	while (isDone != true)
 	{
-		_level.print();
-		playerMove();
-		_level.updateEnemies(_player);
+		gameLogic.printLevel();
+		gameLogic.playerMove();
+		gameLogic.updateEnemies();
 	}
 }
 
-void GameSystem::playerMove() {
-	char input;
-	input = _getch();
-	_level.movePlayer(input, _player);
-}

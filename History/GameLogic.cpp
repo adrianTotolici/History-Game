@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "GameLogic.h"
+#include <sstream>
 
 GameLogic::GameLogic() {
 	_player.init(1, 100, 20, 10);
 	_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
 	procesLevel();
-	_uiLogica.print();
+	printLevel();
 }
 
 void GameLogic::playerMove() {
@@ -15,7 +16,8 @@ void GameLogic::playerMove() {
 }
 
 void GameLogic::printLevel() {
-	_level.print();
+	_uiLogica.setScreen1(_level._levelData);
+	_uiLogica.print();
 }
 
 void GameLogic::updateEnemies() {
@@ -76,6 +78,7 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 	int attackRoll;
 	int attackResult;
 	string enemyName;
+	stringstream log;
 
 	player.getPosition(playerX, playerY);
 
@@ -86,13 +89,15 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 			//Battle
 			//Player attack;
 			attackRoll = player.attack();
-			_uiLogica.updateBattleLog("Player attacked %s whit roll of %d \n", enemyName.c_str(), attackRoll);
+			log.str(std::string());
+			log << _player.getName() << " attacked " << enemyName.c_str() << " whit roll of " << attackRoll;
+			_uiLogica.updateBattleLog(log.str());
 			attackResult = _enemies[i].takeDamage(attackRoll);
 			if (attackResult != 0) {
 				_level.setTile(targetX, targetY, '.');
-				_level.print();
-				_uiLogica.updateBattleLog("%s died!\n", enemyName.c_str());
-				//printf("%s died!\n", enemyName.c_str());
+				log.str(std::string());
+				log << enemyName << " died !";
+				_uiLogica.updateBattleLog(log.str());
 				_enemies[i] = _enemies.back();
 				_enemies.pop_back();
 				i--;
@@ -103,15 +108,14 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 			}
 			//Enemy attack
 			attackRoll = _enemies[i].attack();
-			_uiLogica.updateBattleLog("%s attacked player whit roll of %d \n", enemyName.c_str(), attackRoll);
-			//printf("%s attacked player whit roll of %d \n", enemyName.c_str(), attackRoll);
+			log.str(std::string());
+			log << enemyName << " attacked " << _player.getName() << " whit roll of " << attackRoll;
+			_uiLogica.updateBattleLog(log.str());
 			attackResult = player.takeDamage(attackRoll);
 
 			if (attackResult != 0) {
 				_level.setTile(playerX, playerY, 'x');
-				_level.print();
-				_uiLogica.updateBattleLog("You died!\n");
-				//printf("You died!\n");
+				_uiLogica.updateBattleLog("You died!");
 				system("PAUSE");
 
 				exit(0);

@@ -12,8 +12,6 @@ public:
 	Level();
 
 	void load(string fileName);
-	void print();
-
 
 	char getTile(int x, int y);
 	void setTile(int x, int y, char tile);

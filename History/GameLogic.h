@@ -25,6 +25,7 @@ private:
 	vector <Enemy> _enemies;
 	UiLogic _uiLogica;
 
+
 	void battleEnemy(Player &player, int targetX, int targetY);
 	void movePlayer(char input, Player &player);
 	void procesLevel();

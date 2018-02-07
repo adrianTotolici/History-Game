@@ -37,3 +37,19 @@ void Units::setTile(char tile) {
 char Units::getTile() {
 	return _tile;
 }
+
+int Units::getLevel() {
+	return _level;
+}
+
+int Units::getDefense() {
+	return _defense;
+}
+
+int Units::getHealth() {
+	return _health;
+}
+
+int Units::getAttack() {
+	return _attack;
+}

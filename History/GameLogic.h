@@ -1,11 +1,13 @@
 #pragma once
 #include "stdafx.h"
 #include <string>
+#include <vector>
+#include <conio.h>
+#include <sstream>
+
 #include "Player.h"
 #include "Level.h"
-#include <vector>
 #include "Enemy.h"
-#include <conio.h>
 #include "UiLogic.h"
 
 using namespace std;

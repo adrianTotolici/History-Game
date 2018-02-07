@@ -15,6 +15,10 @@ public:
 	string getName();
 	void setTile(char tile);
 	char getTile();
+	int getLevel();
+	int getDefense();
+	int getHealth();
+	int getAttack();
 
 	string _name;
 	int _level;

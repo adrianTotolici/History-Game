@@ -12,6 +12,10 @@ Player::Player()
 	_y = 0;
 }
 
+int Player::getExperience() {
+	return _experience;
+}
+
 void Player::addExperience(int experience) {
 	_experience += experience;
 

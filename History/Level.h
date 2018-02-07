@@ -12,13 +12,9 @@ public:
 	Level();
 
 	void load(string fileName);
-
 	char getTile(int x, int y);
 	void setTile(int x, int y, char tile);
 
 	vector <string> _levelData;
 
-private:
-	//Utils _utils;
-	//HANDLE _hStdout = GetStdHandle(STD_OUTPUT_HANDLE);;
 };

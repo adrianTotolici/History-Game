@@ -9,6 +9,8 @@ public:
 	int attack();
 	int takeDamage(int attack);
 
+	int getExperience();
+
 private:
 	int _experience;
 };

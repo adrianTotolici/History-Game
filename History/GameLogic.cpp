@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GameLogic.h"
-#include <sstream>
 
 GameLogic::GameLogic() {
 	_player.init(1, 100, 20, 10);
@@ -17,6 +16,15 @@ void GameLogic::playerMove() {
 
 void GameLogic::printLevel() {
 	_uiLogica.setScreen1(_level._levelData);
+	stringstream logPlayer1;
+	stringstream logPlayer2;
+
+	// Player Name: ----- Level: ---- Experience: ----
+	// Attack: ----- Defense: -----  Health: ----
+	logPlayer1.str(std::string());
+	logPlayer1 << "Name: " << _player.getName() << " Level: " << _player.getLevel() << " Experience: " << _player.getExperience();
+	logPlayer2 << "Attack: " << _player.getAttack() << " Defense: "  << _player.getDefense() << " Health: " << _player.getHealth();
+	_uiLogica.updatePlayerStatus(logPlayer1.str(), logPlayer2.str());
 	_uiLogica.print();
 }
 
@@ -79,6 +87,7 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 	int attackResult;
 	string enemyName;
 	stringstream log;
+	stringstream logPlayer1, logPlayer2;
 
 	player.getPosition(playerX, playerY);
 
@@ -101,8 +110,14 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 				_enemies[i] = _enemies.back();
 				_enemies.pop_back();
 				i--;
-				system("PAUSE");
 				player.addExperience(attackResult);
+
+				// Player Name: ----- Level: ---- Experience: ----
+				// Attack: ----- Defense: -----  Health: ----
+				logPlayer1.str(std::string());
+				logPlayer1 << "Name: " << _player.getName() << " Level: " << _player.getLevel() << " Experience: " << _player.getExperience();
+				logPlayer2 << "\n" << "Attack: " << _player.getAttack() << " Defense: " << _player.getDefense() << " Health: " << _player.getHealth();
+				_uiLogica.updatePlayerStatus(logPlayer1.str(), logPlayer2.str());
 
 				return;
 			}
@@ -116,11 +131,15 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 			if (attackResult != 0) {
 				_level.setTile(playerX, playerY, 'x');
 				_uiLogica.updateBattleLog("You died!");
-				system("PAUSE");
-
 				exit(0);
 			}
-			system("PAUSE");
+
+			// Player Name: ----- Level: ---- Experience: ----
+			// Attack: ----- Defense: -----  Health: ----
+			logPlayer1.str(std::string());
+			logPlayer1 << "Name: " << _player.getName() << " Level: " << _player.getLevel() << " Experience: " << _player.getExperience();
+			logPlayer2 << "\n" << "Attack: " << _player.getAttack() << " Defense: " << _player.getDefense() << " Health: " << _player.getHealth();
+			_uiLogica.updatePlayerStatus(logPlayer1.str(), logPlayer2.str());
 			return;
 		}
 	}

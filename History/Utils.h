@@ -20,5 +20,15 @@ public:
 	  ---------   ---------     */
 	string concat2Screens(vector <string> firstScreen, vector <string> secondScreen);
 
+	/*Example
+	 __________    _________
+	|          |  |         |
+	| screen 1 |  | screen 2|
+	|          |  -----------
+	|          |  ___________
+	|          | | screen 3  |
+	------------ -------------    */
+	string concat3Screens(vector <string> firsScreen, vector<string> secondScreen, vector<string> thirdScreen);
+
 };
 

@@ -14,6 +14,7 @@ void GameSystem::playGame() {
 		gameLogic.printLevel();
 		gameLogic.playerMove();
 		gameLogic.updateEnemies();
+		gameLogic.verifyIfGameEnds();
 	}
 }
 

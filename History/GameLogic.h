@@ -20,6 +20,7 @@ public:
 	void playerMove();
 	void printLevel();
 	void updateEnemies();
+	void verifyIfGameEnds();
 
 private:
 	Player _player;

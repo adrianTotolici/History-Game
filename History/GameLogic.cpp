@@ -6,6 +6,7 @@ GameLogic::GameLogic() {
 	_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
 	procesLevel();
 	printLevel();
+
 }
 
 void GameLogic::playerMove() {
@@ -131,6 +132,7 @@ void GameLogic::battleEnemy(Player &player, int targetX, int targetY) {
 			if (attackResult != 0) {
 				_level.setTile(playerX, playerY, 'x');
 				_uiLogica.updateBattleLog("You died!");
+				system("PAUSE");
 				exit(0);
 			}
 
@@ -232,5 +234,13 @@ void GameLogic::processEnemyMove(Player &player, int enemyIndex, int targetX, in
 		break;
 	default:
 		break;
+	}
+}
+
+void GameLogic::verifyIfGameEnds() {
+	if (_enemies.size() < 1) {
+		printf("You have won !");
+		system("PAUSE");
+		exit(0);
 	}
 }

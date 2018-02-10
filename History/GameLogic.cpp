@@ -3,7 +3,8 @@
 
 GameLogic::GameLogic() {
 	_player.init(1, 100, 20, 10);
-	_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
+	//_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
+	_level.loadRandomMap();
 	procesLevel();
 	printLevel();
 

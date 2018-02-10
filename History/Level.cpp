@@ -31,4 +31,9 @@ void Level::setTile(int x, int y, char tile) {
 	_levelData[y][x] = tile;
 }
 
+void Level::loadRandomMap() {
+	MapGenerator mapGenerator;
+	_levelData = mapGenerator.generateMap();
+}
+
 

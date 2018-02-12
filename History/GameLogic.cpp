@@ -3,6 +3,7 @@
 
 GameLogic::GameLogic() {
 	_player.init(1, 100, 20, 10);
+	//to be added when player load custom map
 	//_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
 	_level.loadRandomMap();
 	procesLevel();
@@ -211,6 +212,14 @@ void GameLogic::processPlayerMove(Player &player, int targetX, int targetY) {
 		break;
 	case '#':
 		break;
+	case 'o':
+		_player.addHealth('o');
+		_level.setTile(targetX, targetY, '.');
+		break;
+	case '*':
+		printf("You have found the Artefact, You have won !");
+		system("PAUSE");
+		exit(0);
 	default:
 		battleEnemy(player, targetX, targetY);
 	}
@@ -240,7 +249,7 @@ void GameLogic::processEnemyMove(Player &player, int enemyIndex, int targetX, in
 
 void GameLogic::verifyIfGameEnds() {
 	if (_enemies.size() < 1) {
-		printf("You have won !");
+		printf("All enemy Have been defeted, You have won !");
 		system("PAUSE");
 		exit(0);
 	}

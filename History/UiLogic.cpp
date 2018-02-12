@@ -10,8 +10,29 @@ void UiLogic::print() {
 	if ((_screen2.size()+_screen3.size())>_screen1.size()-1) {
 		_screen2 = _utils.makeNewLogSpace(_screen2);
 	}
-	string levelData = _utils.concat3Screens(_screen1, _screen2, _screen3);	
-	printf(levelData.c_str());
+	string levelData = _utils.concat3Screens(_screen1, _screen2, _screen3);
+	for (unsigned i = 0; i<levelData.length(); ++i)
+	{
+		switch ((unsigned int)levelData[i]) {
+		case 35:
+			printf("\033[36m");
+			printf("%c", levelData[i]);
+			printf("\033[37m");
+			break;
+		case 42:
+			printf("\033[44m\033[33m");
+			printf("%c", levelData[i]);
+			printf("\033[40m\033[37m");
+			break;
+		case 111:
+			printf("\033[31m");
+			printf("%c", levelData[i]);
+			printf("\033[37m");
+			break;
+		default:
+			printf("%c",levelData[i]);
+		}
+	}
 }
 
 void UiLogic::updatePlayerStatus(string logRow1, string logRow2) {

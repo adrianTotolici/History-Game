@@ -31,6 +31,14 @@ void Player::addExperience(int experience) {
 	}
 }
 
+void Player::addHealth(char item) {
+	switch (item){
+	case 'o':
+		_health += 5;
+		break;
+	}
+}
+
 int Player::attack() {
 	static default_random_engine randomEngine((unsigned int) time(NULL));
 	uniform_int_distribution<int> attackRoll(0, _attack);

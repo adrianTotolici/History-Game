@@ -9,16 +9,15 @@ using namespace std;
 class MapGenerator
 {
 public:
-	MapGenerator();
+	MapGenerator(int height, int width);
 
 	vector<string> generateMap();
 
 private:
-	vector<string> _map;
-	int _wallProcent;
-	int _emptySpaceProcent;
-	int _enemyProcent;
+	string generateEnemyTile();
 
-	char generateEnemyTile();
+	vector<string> _map;
+	int _xRandPosArtefact, _yRandPosArtefact;
+	int _heightMap, _widthMap;
 };
 

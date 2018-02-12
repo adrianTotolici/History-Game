@@ -6,6 +6,7 @@ public:
 	Player();
 	
 	void addExperience(int experience);
+	void addHealth(char item);
 	int attack();
 	int takeDamage(int attack);
 

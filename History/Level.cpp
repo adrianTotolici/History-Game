@@ -32,7 +32,7 @@ void Level::setTile(int x, int y, char tile) {
 }
 
 void Level::loadRandomMap() {
-	MapGenerator mapGenerator;
+	MapGenerator mapGenerator(25,50);
 	_levelData = mapGenerator.generateMap();
 }
 

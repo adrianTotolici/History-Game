@@ -2,7 +2,7 @@
 #include "GameLogic.h"
 
 GameLogic::GameLogic() {
-	_player.init(1, 100, 20, 10);
+	_player.init();
 	//to be added when player load custom map
 	//_level.load("C:\\game-proj\\History\\History\\Level\\level1.txt");
 	_level.loadRandomMap();
@@ -154,45 +154,45 @@ void GameLogic::procesLevel() {
 	for (size_t i = 0; i < _level._levelData.size(); i++) {
 		for (size_t j = 0; j <_level._levelData[i].size(); j++) {
 			tile = _level._levelData[i][j];
-
+			Enemy enemy;
 			switch (tile) {
 			case '@': //Player
 				_player.setPosition(j, i);
 				break;
 			case 's': //snake
-				_enemies.push_back(Enemy(10));
-				_enemies.back().init(1, 2, 1, 10);
-				_enemies.back().setName("Snake");
-				_enemies.back().setTile(tile);
-				_enemies.back().setPosition(j, i);
+				enemy.randomiseAttributes('s');
+				enemy.setName("Snake");
+				enemy.setTile(tile);
+				enemy.setPosition(j, i);
+				_enemies.push_back(enemy);
 				break;
-			case 'g': //goblin
-				_enemies.push_back(Enemy(10));
-				_enemies.back().init(1, 2, 1, 10);
-				_enemies.back().setName("Goblin");
-				_enemies.back().setTile(tile);
-				_enemies.back().setPosition(j, i);
+			case 'g': //goblin			
+				enemy.randomiseAttributes('g');
+				enemy.setName("Goblin");
+				enemy.setTile(tile);
+				enemy.setPosition(j, i);
+				_enemies.push_back(enemy);
 				break;
-			case 'B': //bandit
-				_enemies.push_back(Enemy(10));
-				_enemies.back().init(1, 2, 1, 10);
-				_enemies.back().setName("Bandit");
-				_enemies.back().setTile(tile);
-				_enemies.back().setPosition(j, i);
+			case 'B': //bandit		
+				enemy.randomiseAttributes('B');
+				enemy.setName("Bandit");
+				enemy.setTile(tile);
+				enemy.setPosition(j, i);
+				_enemies.push_back(enemy);
 				break;
-			case 'O': //Ogre
-				_enemies.push_back(Enemy(10));
-				_enemies.back().init(1, 2, 1, 10);
-				_enemies.back().setName("Ogre");
-				_enemies.back().setTile(tile);
-				_enemies.back().setPosition(j, i);
+			case 'O': //Ogre				
+				enemy.randomiseAttributes('O');
+				enemy.setName("Ogre");
+				enemy.setTile(tile);
+				enemy.setPosition(j, i);
+				_enemies.push_back(enemy);
 				break;
-			case 'D': //Dragon
-				_enemies.push_back(Enemy(10));
-				_enemies.back().init(1, 2, 1, 10);
-				_enemies.back().setName("Dragon");
-				_enemies.back().setTile(tile);
-				_enemies.back().setPosition(j, i);
+			case 'D': //Dragon		
+				enemy.randomiseAttributes('D');
+				enemy.setName("Dragon");
+				enemy.setTile(tile);
+				enemy.setPosition(j, i);
+				_enemies.push_back(enemy);
 				break;
 			}
 		}
@@ -217,9 +217,9 @@ void GameLogic::processPlayerMove(Player &player, int targetX, int targetY) {
 		_level.setTile(targetX, targetY, '.');
 		break;
 	case '*':
+		system("cls");
 		printf("You have found the Artefact, You have won !");
 		system("PAUSE");
-		exit(0);
 	default:
 		battleEnemy(player, targetX, targetY);
 	}
@@ -249,8 +249,8 @@ void GameLogic::processEnemyMove(Player &player, int enemyIndex, int targetX, in
 
 void GameLogic::verifyIfGameEnds() {
 	if (_enemies.size() < 1) {
+		system("cls");
 		printf("All enemy Have been defeted, You have won !");
 		system("PAUSE");
-		exit(0);
 	}
 }

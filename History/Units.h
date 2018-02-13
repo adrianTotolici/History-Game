@@ -8,7 +8,7 @@ class Units
 public:
 	Units();
 
-	void init(int level, int health, int attack, int defense);
+	void init();
 	void setPosition(int x, int y);
 	void getPosition(int &x, int &y);
 	void setName(string name);

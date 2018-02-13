@@ -6,10 +6,7 @@
 
 using namespace std;
 
-Enemy::Enemy(int xp)
-{
-	_experienceValue = xp;
-}	
+Enemy::Enemy() {}	
 
 int Enemy::attack() {
 	static default_random_engine randomEngine((unsigned int)time(NULL));
@@ -73,4 +70,66 @@ char Enemy::getMove(int playerX, int playerY) {
 	default:
 		return '.';
 	}
+}
+
+void Enemy::randomiseAttributes(char tile) {
+	static default_random_engine randEngine((unsigned int)time(NULL));
+	int health;
+	int attack;
+	int defense;
+	int level;
+	int experience;
+
+	switch (tile){
+	case 's':
+		health = 5;
+		attack = 2;
+		defense = 1;
+		level = 1;
+		experience = 5;
+		break;
+	
+	case 'g':
+		health = 10;
+		attack = 5;
+		defense = 3;
+		level = 2;
+		experience = 10;
+		break;
+
+	case 'B':
+		health = 12;
+		attack = 6;
+		defense = 3;
+		level = 2;
+		experience = 12;
+		break;
+		
+	case 'O':
+		health = 30;
+		attack = 15;
+		defense = 10;
+		level = 3;
+		experience = 20;
+		break;
+
+	case 'D':
+		health = 50;
+		attack = 25;
+		defense = 20;
+		level = 4;
+		experience = 30;
+		break;
+	}
+
+	uniform_int_distribution<int> moveRollHealth((health/2), health);
+	uniform_int_distribution<int> moveRollAttack((attack/2), attack);
+	uniform_int_distribution<int> moveRollDefense((defense / 2), defense);
+	uniform_int_distribution<int> moveRollExperience((experience - (experience / 2)), experience);
+
+	_health = moveRollHealth(randEngine);
+	_attack = moveRollAttack(randEngine);
+	_defense = moveRollDefense(randEngine);
+	_experienceValue = moveRollExperience(randEngine);
+	_level = level;
 }

@@ -5,12 +5,7 @@
 
 Units::Units(){}
 
-void Units::init(int level, int health, int attack, int defense) {
-	_level = level;
-	_health = health;
-	_attack = attack;
-	_defense = defense;
-}
+void Units::init() {}
 
 void Units::setPosition(int x, int y) {
 	_x = x;

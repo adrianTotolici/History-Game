@@ -8,6 +8,11 @@ using namespace std;
 
 Player::Player()
 {
+	_health = 20;
+	_attack = 5;
+	_defense = 5;
+	_level = 0;
+	_experience = 0;
 	_x = 0;
 	_y = 0;
 }
@@ -21,13 +26,11 @@ void Player::addExperience(int experience) {
 
 	// level up
 	while (_experience > 50) {
-		printf("Leveled Up!\n");
 		_experience -= 50;
 		_attack += 10;
 		_defense += 5;
 		_health += 10;
 		_level++;
-		system("PAUSE");
 	}
 }
 

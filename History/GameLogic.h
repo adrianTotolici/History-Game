@@ -34,5 +34,7 @@ private:
 	void procesLevel();
 	void processPlayerMove(Player &player, int targetX, int targetY);
 	void processEnemyMove(Player &player, int enemyIndex, int targetX, int targetY);
+
+	void rangeView(Enemy units);
 };
 

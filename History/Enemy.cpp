@@ -6,7 +6,25 @@
 
 using namespace std;
 
-Enemy::Enemy() {}	
+Enemy::Enemy() {
+	_xl = true;
+	_xr = true;
+	_yu = true;
+	_yd = true;
+}	
+
+void Enemy::setXl(bool xl) {
+	_xl = xl;
+}
+void Enemy::setXr(bool xr) {
+	_xr = xr;
+}
+void Enemy::setYd(bool yd) {
+	_yd = yd;
+}
+void Enemy::setYu(bool yu) {
+	_yu = yu;
+}
 
 int Enemy::attack() {
 	static default_random_engine randomEngine((unsigned int)time(NULL));
@@ -44,15 +62,15 @@ char Enemy::getMove(int playerX, int playerY) {
 	if (distance < 5) {
 		if (adx > ady) {
 			if (dx > 0) {
-				return 'a';
+				if (_xr) return 'a';
 			} else {
-				return 'd';
+				if (_xl) return 'd';
 			}
 		} else {
-			if (dy > 0) {
-				return 'w';
+			if (dy > 0 ) {
+				if (_yu) return 'w';
 			} else {
-				return 's';
+				if (_yd) return 's';
 			}
 		}
 	}

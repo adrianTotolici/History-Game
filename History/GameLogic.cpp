@@ -39,23 +39,24 @@ void GameLogic::updateEnemies() {
 	_player.getPosition(playerX, playerY);
 
 	for (size_t i = 0; i < _enemies.size(); i++) {
+		rangeView(_enemies[i]);
 		aiMove = _enemies[i].getMove(playerX, playerY);
 		_enemies[i].getPosition(enemyX, enemyY);
 
-		switch (aiMove) {
-		case 'w':
-			processEnemyMove(_player, i, enemyX, enemyY - 1);
-			break;
-		case 's':
-			processEnemyMove(_player, i, enemyX, enemyY + 1);
-			break;
-		case 'a':
-			processEnemyMove(_player, i, enemyX - 1, enemyY);
-			break;
-		case 'd':
-			processEnemyMove(_player, i, enemyX + 1, enemyY);
-			break;
-		}
+			switch (aiMove) {
+			case 'w':
+				processEnemyMove(_player, i, enemyX, enemyY - 1);
+				break;
+			case 's':
+				processEnemyMove(_player, i, enemyX, enemyY + 1);
+				break;
+			case 'a':
+				processEnemyMove(_player, i, enemyX - 1, enemyY);
+				break;
+			case 'd':
+				processEnemyMove(_player, i, enemyX + 1, enemyY);
+				break;
+			}
 	}
 }
 
@@ -253,4 +254,63 @@ void GameLogic::verifyIfGameEnds() {
 		printf("All enemy Have been defeted, You have won !");
 		system("PAUSE");
 	}
+}
+
+void GameLogic::rangeView(Enemy units) {
+	int xr_range, xl_range, yu_range, yd_range;
+
+	if (units._x < 5) {
+		xr_range = units._x;
+	} else {
+		xr_range = 5;
+	}
+
+	if ((units._x + 5) > _level._levelData[0].size()) {
+		xl_range = _level._levelData[0].size();
+	} else {
+		xl_range = 5;
+	}
+
+	if (units._y < 5) {
+		yu_range = units._y-1;
+	} else {
+		yu_range = 5;
+	}
+
+	if ((units._y + 5) > _level._levelData.size()) {
+		yd_range = _level._levelData.size();
+	} else {
+		yd_range = 5;
+	}
+		for (int i = units._y; i<yu_range; i--) {
+			if (_level._levelData[i].at(units._x) == '#') {
+				units.setYu(false);
+			} else {
+				units.setYu(true);
+			}
+		}
+
+		for (int i = units._x; i < xr_range; i++) {
+			if (_level._levelData[units._y].at(i) == '#') {
+				units.setXr(false);
+			} else {
+				units.setXr(true);
+			}
+		}
+
+		for (int i = units._y; i > yd_range; i++) {
+			if (_level._levelData[i].at(units._x) == '#') {
+				units.setYd(false);
+			} else {
+				units.setYd(true);
+			}
+		}
+
+		for (int i = units._x; i > xl_range; i--) {
+			if (_level._levelData[units._y].at(i) == '#') {
+				units.setXr(false);
+			} else {
+				units.setXr(true);
+			}
+		}
 }
